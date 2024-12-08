@@ -15,19 +15,37 @@ import { containerVariants, itemVariants } from '@/lib/animations';
 
 const services = [
   {
-    icon: <BiCut className="text-4xl text-primary" />,
+    icon: <BiCut className="text-5xl text-primary" />,
     title: 'Hair Styling',
-    description: 'From cuts to coloring, we create the perfect look for you'
+    description: 'From cuts to coloring, we create the perfect look for you',
+    details: [
+      'Custom haircuts and styling',
+      'Professional hair coloring',
+      'Highlights and balayage',
+      'Hair treatments and masks'
+    ]
   },
   {
-    icon: <FaPalette className="text-4xl text-primary" />,
+    icon: <FaPalette className="text-5xl text-primary" />,
     title: 'Makeup',
-    description: 'Professional makeup for any occasion'
+    description: 'Professional makeup for any occasion',
+    details: [
+      'Bridal and special event makeup',
+      'Natural and glamour looks',
+      'Long-lasting techniques',
+      'Skin preparation and care'
+    ]
   },
   {
-    icon: <FaClock className="text-4xl text-primary" />,
+    icon: <FaClock className="text-5xl text-primary" />,
     title: 'Quick Service',
-    description: 'Efficient service without compromising quality'
+    description: 'Efficient service without compromising quality',
+    details: [
+      'Express styling sessions',
+      'Quick touch-ups',
+      'Flexible scheduling',
+      'Walk-ins welcome'
+    ]
   }
 ];
 
@@ -59,16 +77,38 @@ export default function Home() {
               variants={itemVariants}
               custom={index}
             >
-              <Card className="text-center hover:shadow-lg transition-shadow">
+              <Card className="text-center hover:shadow-lg transition-shadow h-full flex flex-col justify-between p-6">
+                <div>
+                  <motion.div
+                    whileHover={{ scale: 1.2 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                    className="flex justify-center items-center mb-6 h-20"
+                  >
+                    {service.icon}
+                  </motion.div>
+                  <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
+                  <p className="text-neutral-dark/80 mb-4">{service.description}</p>
+                  <ul className="space-y-2 text-sm text-left">
+                    {service.details.map((detail, i) => (
+                      <li key={i} className="flex items-center">
+                        <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                  className="mb-4"
+                  whileHover={{ scale: 1.05 }}
+                  className="mt-6"
                 >
-                  {service.icon}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => window.location.href = '/services'}
+                  >
+                    Learn More
+                  </Button>
                 </motion.div>
-                <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                <p className="text-neutral-dark/80">{service.description}</p>
               </Card>
             </motion.div>
           ))}
