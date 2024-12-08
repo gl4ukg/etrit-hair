@@ -1,0 +1,67 @@
+/* Custom styles for react-slick slider */
+.testimonials-slider {
+  margin-bottom: 40px;
+}
+
+.testimonials-slider .slick-dots {
+  bottom: -40px;
+}
+
+.testimonials-slider .slick-dots li {
+  margin: 0 4px;
+}
+
+.testimonials-slider .slick-dots li button:before {
+  display: none;
+}
+
+.testimonials-slider .slick-prev,
+.testimonials-slider .slick-next {
+  width: 40px;
+  height: 40px;
+  background-color: #7C9A7C;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.testimonials-slider .slick-prev {
+  left: -20px;
+}
+
+.testimonials-slider .slick-next {
+  right: -20px;
+}
+
+.testimonials-slider .slick-prev:hover,
+.testimonials-slider .slick-next:hover {
+  background-color: #4A674A;
+  transform: scale(1.1);
+}
+
+.testimonials-slider .slick-prev:before,
+.testimonials-slider .slick-next:before {
+  color: #F8FAF8;
+  opacity: 1;
+}
+
+.testimonials-slider .slick-slide {
+  padding: 20px;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.testimonials-slider .slick-current {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .testimonials-slider .slick-prev {
+    left: -10px;
+  }
+
+  .testimonials-slider .slick-next {
+    right: -10px;
+  }
+}

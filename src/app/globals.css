@@ -3,19 +3,47 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 253, 251, 249;
+  --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-white text-neutral-dark;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-neutral-dark mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-neutral-dark/80 mb-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 border border-transparent 
+           text-base font-medium rounded-md shadow-sm text-white bg-primary 
+           hover:bg-primary-dark focus:outline-none focus:ring-2 
+           focus:ring-offset-2 focus:ring-primary transition-colors duration-200;
+  }
+
+  .btn-outline {
+    @apply btn bg-transparent border-primary text-primary 
+           hover:bg-primary hover:text-white;
+  }
+
+  .nav-link {
+    @apply text-neutral-dark hover:text-primary transition-colors duration-300;
+  }
 }
