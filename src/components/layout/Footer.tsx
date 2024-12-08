@@ -118,7 +118,7 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="mt-16 pt-8 border-t border-neutral-800">
+        <div className="mt-16 pt-8 border-t border-white">
           <p className="text-neutral-400 text-sm">
             &copy; {new Date().getFullYear()} EtritHair. All rights reserved.
           </p>
