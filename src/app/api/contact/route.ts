@@ -3,7 +3,7 @@ import { z } from 'zod'
 import prisma from '@/lib/prisma'
 import { rateLimit } from '@/lib/rateLimiter'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import { sendEmail, getContactFormEmail } from '@/lib/email'
 import type { RateLimitResponse } from '@/lib/rateLimiter'
 
