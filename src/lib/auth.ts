@@ -21,30 +21,43 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error('Invalid credentials')
+        try {
+          console.log('🔍 Auth attempt for email:', credentials?.email);
+
+          if (!credentials?.email || !credentials?.password) {
+            console.log('❌ Missing credentials');
+            throw new Error('Invalid credentials');
+          }
+
+          const admin = await prisma.admin.findUnique({
+            where: { email: credentials.email }
+          });
+
+          if (!admin) {
+            console.log('❌ Admin not found');
+            throw new Error('Invalid credentials');
+          }
+
+          console.log('✅ Admin found, checking password');
+          const isValid = await compare(credentials.password, admin.passwordHash);
+
+          if (!isValid) {
+            console.log('❌ Invalid password');
+            throw new Error('Invalid credentials');
+          }
+
+          console.log('✅ Password valid, updating last login');
+          await prisma.admin.update({
+            where: { id: admin.id },
+            data: { lastLogin: new Date() }
+          });
+
+          console.log('✅ Auth successful');
+          return { id: admin.id, email: admin.email };
+        } catch (error) {
+          console.error('❌ Auth error:', error);
+          throw error;
         }
-
-        const admin = await prisma.admin.findUnique({
-          where: { email: credentials.email }
-        })
-
-        if (!admin) {
-          throw new Error('Invalid credentials')
-        }
-
-        const isValid = await compare(credentials.password, admin.passwordHash)
-
-        if (!isValid) {
-          throw new Error('Invalid credentials')
-        }
-
-        await prisma.admin.update({
-          where: { id: admin.id },
-          data: { lastLogin: new Date() }
-        })
-
-        return { id: admin.id, email: admin.email }
       }
     })
   ],
@@ -55,6 +68,7 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
+  debug: true, // Enable debug messages
   callbacks: {
     async jwt({ token, user }) {
       if (user) {

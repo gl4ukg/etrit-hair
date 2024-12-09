@@ -25,18 +25,28 @@ export default function AdminLogin() {
     setIsLoading(true)
 
     try {
+      console.log('🔄 Attempting login with:', email);
       const result = await signIn('credentials', {
         email,
         password,
-        redirect: false
+        redirect: false,
+        callbackUrl: '/admin'
       })
 
+      console.log('📝 Login result:', result);
+
       if (result?.error) {
+        console.error('❌ Login error:', result.error);
         setError('Invalid email or password')
-      } else {
+      } else if (result?.ok) {
+        console.log('✅ Login successful, redirecting...');
         router.push('/admin')
+      } else {
+        console.error('❌ Unknown login result:', result);
+        setError('An unexpected error occurred')
       }
     } catch (err) {
+      console.error('❌ Login exception:', err);
       setError('An error occurred. Please try again.')
     } finally {
       setIsLoading(false)
