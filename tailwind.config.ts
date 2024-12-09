@@ -20,19 +20,36 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          light: '#C8D5C8',  // Light Sage
-          DEFAULT: '#7C9A7C', // Sage Green
-          dark: '#4A674A',    // Deep Sage
+          DEFAULT: "#1a1a1a", // Dark black for primary actions
+          light: "#404040", // Lighter black for hover states
+          dark: "#000000", // Pure black for emphasis
+        },
+        secondary: {
+          DEFAULT: "#666666", // Medium grey
+          light: "#808080", // Light grey
+          dark: "#4d4d4d", // Dark grey
         },
         neutral: {
-          light: '#F8FAF8',   // Off White
-          DEFAULT: '#E8EDE8',  // Light Gray with green tint
-          dark: '#2C3B2C',    // Deep Green-Gray
+          50: "#fafafa", // Almost white
+          100: "#f5f5f5",
+          200: "#e5e5e5",
+          300: "#d4d4d4",
+          400: "#a3a3a3",
+          500: "#737373",
+          600: "#525252",
+          700: "#404040",
+          800: "#262626",
+          900: "#171717", // Almost black
         },
-        accent: {
-          cream: '#F5E6D3',   // Warm Cream
-          terra: '#D4A373',   // Terracotta
-          olive: '#606C38',   // Olive Green
+        background: {
+          light: "#ffffff", // White
+          DEFAULT: "#fafafa", // Very light grey
+          dark: "#f5f5f5", // Light grey
+        },
+        text: {
+          primary: "#1a1a1a", // Almost black
+          secondary: "#666666", // Medium grey
+          light: "#8c8c8c", // Light grey
         },
       },
       spacing: {

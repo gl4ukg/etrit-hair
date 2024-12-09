@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/Button';
 import { PageWrapper } from '@/components/ui/PageWrapper';
 import { Testimonials } from '@/components/ui/Testimonials';
 import { FAQ } from '@/components/ui/FAQ';
+import  AboutSection  from '@/components/sections/AboutSection';
+import  TeamSection  from '@/components/sections/TeamSection';
 import { motion } from 'framer-motion';
 import { containerVariants, itemVariants } from '@/lib/animations';
 
@@ -114,6 +116,10 @@ export default function Home() {
           ))}
         </motion.div>
       </Section>
+
+      <AboutSection />
+
+      <TeamSection />
 
       <Testimonials />
 
