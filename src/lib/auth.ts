@@ -57,7 +57,7 @@ export const authOptions: AuthOptions = {
           return { 
             id: admin.id, 
             email: admin.email,
-            name: 'Admin' // Adding name for NextAuth session
+            name: 'Admin'
           };
         } catch (error) {
           console.error('❌ Auth error:', error);
@@ -68,20 +68,40 @@ export const authOptions: AuthOptions = {
   ],
   pages: {
     signIn: '/admin/login',
-    error: '/admin/login', // Add error page
+    error: '/admin/login',
   },
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
+  jwt: {
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
   cookies: {
     sessionToken: {
-      name: `next-auth.session-token`,
+      name: 'next-auth.session-token',
       options: {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: true
+        secure: process.env.NODE_ENV === 'production'
+      }
+    },
+    callbackUrl: {
+      name: 'next-auth.callback-url',
+      options: {
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production'
+      }
+    },
+    csrfToken: {
+      name: 'next-auth.csrf-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production'
       }
     }
   },
@@ -101,4 +121,5 @@ export const authOptions: AuthOptions = {
     }
   },
   secret: process.env.NEXTAUTH_SECRET,
+  trustHost: true
 }
