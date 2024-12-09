@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { signIn, useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 
 export default function AdminLogin() {
@@ -12,6 +12,7 @@ export default function AdminLogin() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { status } = useSession()
+  const searchParams = useSearchParams()
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -35,15 +36,21 @@ export default function AdminLogin() {
 
       console.log('📝 Login result:', result);
 
-      if (result?.error) {
+      if (!result) {
+        console.error('❌ No result from signIn');
+        setError('An unexpected error occurred')
+        return
+      }
+
+      if (result.error) {
         console.error('❌ Login error:', result.error);
         setError('Invalid email or password')
-      } else if (result?.ok) {
+        return
+      }
+
+      if (result.ok) {
         console.log('✅ Login successful, redirecting...');
-        router.push('/admin')
-      } else {
-        console.error('❌ Unknown login result:', result);
-        setError('An unexpected error occurred')
+        router.push(result.url || '/admin')
       }
     } catch (err) {
       console.error('❌ Login exception:', err);
@@ -53,6 +60,16 @@ export default function AdminLogin() {
     }
   }
 
+  // Show loading state while checking session
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-primary rounded-full animate-spin border-t-transparent"></div>
+      </div>
+    )
+  }
+
+  // Don't show login form if already authenticated
   if (status === 'authenticated') {
     return null
   }

@@ -15,18 +15,19 @@ declare module 'next-auth' {
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
+      id: 'credentials',
       name: 'Credentials',
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         try {
           console.log('🔍 Auth attempt for email:', credentials?.email);
 
           if (!credentials?.email || !credentials?.password) {
             console.log('❌ Missing credentials');
-            throw new Error('Invalid credentials');
+            return null;
           }
 
           const admin = await prisma.admin.findUnique({
@@ -35,7 +36,7 @@ export const authOptions: AuthOptions = {
 
           if (!admin) {
             console.log('❌ Admin not found');
-            throw new Error('Invalid credentials');
+            return null;
           }
 
           console.log('✅ Admin found, checking password');
@@ -43,7 +44,7 @@ export const authOptions: AuthOptions = {
 
           if (!isValid) {
             console.log('❌ Invalid password');
-            throw new Error('Invalid credentials');
+            return null;
           }
 
           console.log('✅ Password valid, updating last login');
@@ -53,22 +54,38 @@ export const authOptions: AuthOptions = {
           });
 
           console.log('✅ Auth successful');
-          return { id: admin.id, email: admin.email };
+          return { 
+            id: admin.id, 
+            email: admin.email,
+            name: 'Admin' // Adding name for NextAuth session
+          };
         } catch (error) {
           console.error('❌ Auth error:', error);
-          throw error;
+          return null;
         }
       }
     })
   ],
   pages: {
     signIn: '/admin/login',
+    error: '/admin/login', // Add error page
   },
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  debug: true, // Enable debug messages
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true
+      }
+    }
+  },
+  debug: process.env.NODE_ENV === 'development',
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
