@@ -31,30 +31,31 @@ export default function AdminLogin() {
         email,
         password,
         redirect: false,
-        callbackUrl: '/admin'
-      })
+        callbackUrl: '/admin',
+        json: true
+      }).catch(err => {
+        console.error('SignIn catch error:', err);
+        return null;
+      });
 
       console.log('📝 Login result:', result);
 
       if (!result) {
-        console.error('❌ No result from signIn');
-        setError('An unexpected error occurred')
-        return
+        setError('Connection error. Please try again.');
+        return;
       }
 
       if (result.error) {
-        console.error('❌ Login error:', result.error);
-        setError('Invalid email or password')
-        return
+        setError('Invalid email or password');
+        return;
       }
 
       if (result.ok) {
-        console.log('✅ Login successful, redirecting...');
-        router.push(result.url || '/admin')
+        router.push(result.url || '/admin');
       }
     } catch (err) {
       console.error('❌ Login exception:', err);
-      setError('An error occurred. Please try again.')
+      setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false)
     }
