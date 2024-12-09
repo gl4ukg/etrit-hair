@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "create-admin": "tsx scripts/create-admin.ts",
+    "create-admin-prod": "tsx scripts/create-admin-prod.ts",
+    "setup-prod-db": "tsx scripts/setup-prod-db.ts",
+    "init-prod-db": "tsx scripts/init-prod-db.ts",
     "reset-admin": "tsx scripts/reset-admin.ts"
   },
   "dependencies": {
