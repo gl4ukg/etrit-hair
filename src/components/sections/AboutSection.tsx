@@ -26,7 +26,7 @@ export default function AboutSection() {
               <div className="space-y-6 text-neutral-600">
                 <p>
                   Welcome to Etrit Hair, where passion meets precision in the art of hairstyling. 
-                  Founded by master stylist Etrit Thaqi, our salon has been transforming looks and 
+                  Founded by master stylist Etrit Tullumi, our salon has been transforming looks and 
                   boosting confidence for over a decade.
                 </p>
 
